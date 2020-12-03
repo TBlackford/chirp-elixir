@@ -3,37 +3,52 @@ defmodule ChirpWeb.PostLive.PostComponent do
 
   def render(assigns) do
     ~L"""
-    <div id="post-<%= @post.id %>" class="post">
-      <div class="row">
-        <div class="column column-10">
-          <div class="post-avatar"><div>
+      <div id="post-<%= @post.id %>" class="post">
+        <div class="row">
+          <div class="column column-10">
+            <div class="post-avatar">
+              <img src="https://via.placeholder.com/100" alt="<%= @post.username %>">
+            </div>
+          </div>
+          <div class="column column-90 post-body">
+            <span class="user_name">@<%= @post.username %></span>
+            <br>
+            <p><%= @post.body %></p>
+          </div>
         </div>
-        <div>
-          <b>@<%= @post.username %></b>
-          <br />
-          <%= @post.body %>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="column">
-          <i class="far fa-heart"></i> <%= @post.likes_count %>
-        </div>
-        <div class="column">
-          <i class="far fa-retweet"></i> <%= @post.resposts_count %>
-        </div>
-        <div class="column column-33 text-center">
+        <div class="row actions_bar">
+          <div class="column column-33 text-center">
+            <a href="#" phx-click="like" phx-target="<%= @myself %>">
+              <span>💟</span> <%= @post.likes_count %>
+            </a>
+          </div>
+          <div class="column column-33 text-center">
+            <a href="#" phx-click="repost" phx-target="<%= @myself %>">
+              <span>🔄</span> <%= @post.resposts_count %>
+            </a>
+          </div>
+          <div class="column column-33 text-center">
             <%= live_patch to: Routes.post_index_path(@socket, :edit, @post.id) do %>
-              <i class="far fa-edit"></i>
+              <span>✏️</span>
             <% end %>
             <span>&nbsp;&nbsp;</span>
             <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, data: [confirm: "Are you sure?"] do %>
-              <i class="far fa-trash-alt"></i>
+              <span>❌</span>
             <% end %>
           </div>
+        </div>
       </div>
-    </div>
     """
   end
 
+  #def handle_event("like", _, socket) do
+  #  Chirp.Timeline.inc_likes(socket.assigns.post)
+  #  {:noreply, socket}
+  #end
+
+  #def handle_event("repost", _, socket) do
+  #  Chirp.Timeline.inc_reposts(socket.assigns.post)
+  #  {:noreply, socket}
+  #end
 end
