@@ -25,6 +25,7 @@ defmodule Chirp.Timeline do
     {1, [post]} =
       from(p in Post, where: p.id == ^id, select: p)
       |> Repo.update_all(inc: [likes_count: 1])
+
     broadcast({:ok, post}, :post_updated)
   end
 
@@ -32,7 +33,8 @@ defmodule Chirp.Timeline do
     {1, [post]} =
       from(p in Post, where: p.id == ^id, select: p)
       |> Repo.update_all(inc: [reposts_count: 1])
-    broadcast({:ok, post}, :repost_updated)
+
+    broadcast({:ok, post}, :post_updated)
   end
 
   @doc """
