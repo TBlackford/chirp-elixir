@@ -6,9 +6,9 @@ defmodule Chirp.TimelineTest do
   describe "posts" do
     alias Chirp.Timeline.Post
 
-    @valid_attrs %{body: "some body", likes_count: 42, resposts_count: 42, username: "some username"}
-    @update_attrs %{body: "some updated body", likes_count: 43, resposts_count: 43, username: "some updated username"}
-    @invalid_attrs %{body: nil, likes_count: nil, resposts_count: nil, username: nil}
+    @valid_attrs %{body: "some body", likes_count: 42, reposts_count: 42, username: "some username"}
+    @update_attrs %{body: "some updated body", likes_count: 43, reposts_count: 43, username: "some updated username"}
+    @invalid_attrs %{body: nil, likes_count: nil, reposts_count: nil, username: nil}
 
     def post_fixture(attrs \\ %{}) do
       {:ok, post} =
@@ -33,7 +33,7 @@ defmodule Chirp.TimelineTest do
       assert {:ok, %Post{} = post} = Timeline.create_post(@valid_attrs)
       assert post.body == "some body"
       assert post.likes_count == 42
-      assert post.resposts_count == 42
+      assert post.reposts_count == 42
       assert post.username == "some username"
     end
 
@@ -46,7 +46,7 @@ defmodule Chirp.TimelineTest do
       assert {:ok, %Post{} = post} = Timeline.update_post(post, @update_attrs)
       assert post.body == "some updated body"
       assert post.likes_count == 43
-      assert post.resposts_count == 43
+      assert post.reposts_count == 43
       assert post.username == "some updated username"
     end
 

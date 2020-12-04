@@ -6,7 +6,7 @@ defmodule Chirp.Repo.Migrations.CreatePosts do
       add :username, :string
       add :body, :string
       add :likes_count, :integer
-      add :resposts_count, :integer
+      add :reposts_count, :integer
 
       timestamps()
     end
